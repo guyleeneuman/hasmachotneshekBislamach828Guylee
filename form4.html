@@ -80,12 +80,23 @@
   
 <textarea class="detailsField" name="details" placeholder="פירוט:
 גדוד/סיירת/אחר"></textarea>   <!-- כפתור שליחה -->
-<div class="dateTimeRow">
     <div class="datePickerContainer">
-      <input type="date" id="dateDisplay" required>
-      <input type="hidden" name="date_range" id="dateInput">
-    </div> <input type="time" name="time" required>
+<div class="dateTimeRow">
+
+  <!-- DATE -->
+  <div class="datePickerContainer">
+    <div class="fakeDate" id="dateDisplayText">תאריך</div>
+    <input type="date" id="dateDisplay" required>
+    <input type="hidden" name="date_range" id="dateInput">
   </div>
+
+  <!-- TIME -->
+  <div class="timeWrapper">
+    <div class="fakeTime"></div>
+    <input type="time" name="time" required>
+  </div>
+
+</div>
 <button type="submit" class="submitBtn">
   <img src="assets/butttons/submit.png" alt="הגשה">
 </button>

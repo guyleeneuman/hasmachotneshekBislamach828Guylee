@@ -519,10 +519,10 @@ body {
     border: none;
     padding: 0;
     cursor: pointer;
-
     position: relative;
     left: 25%;
     width: fit-content;
+    bottom: -2vh;
 }
 
 
