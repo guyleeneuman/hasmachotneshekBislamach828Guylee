@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הסמכות נשק- ענף רקם מתקדם</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <img class="navbar" src="assets/logos/logos.png" alt="icon 1">
+<div class="button1" onclick="openPopup(1)">
+  <img src="assets/butttons/matoM.png">
+</div>
+
+<div class="button2" onclick="openPopup(2)">
+  <img src="assets/butttons/laoM.png">
+</div>
+
+<div class="button3" onclick="openPopup(3)">
+  <img src="assets/butttons/matdorM.png">
+</div>
+
+<div class="button4" onclick="openPopup(4)">
+  <img src="assets/butttons/yatedholitM.png">
+</div>
+<div class="button5" onclick="openPopup(5)">
+  <img src="assets/butttons/matol2M.png">
+</div>
+<div class="button6" onclick="openPopup(6)">
+  <img src="assets/butttons/maklarM.png">
+</div>
+<div class="button7" onclick="openPopup(7)">
+  <img src="assets/butttons/maklaronM.png">
+</div>
+ <div id="overlay"></div>
+
+<div id="popup">
+    <img class="popUpBackground" src="assets/elements/rashmatz.png">
+    <img class="goBack" src="assets/butttons/Group 72.png" onclick="closePopup()">
+    <img class="toForm" src="assets/butttons/toFill.png" onclick="goToForm()">
+    <img class="titlePopUp" id="popupTitle">
+    <div class="text" id="popupText"></div>
+</div>
+</body>
+<script>  
+let currentButton = 0;
+
+// מערך טקסטים
+const texts = {
+    1: "הוא נשק דו תכלית- יורה רימונים 40 מ״מ וכדורי 5.56 מ״מ. הוא מורכב על גבי נשקים שונים (m4, תבור, מיקרו תבור וכו׳).נשק ברמת הכיתה (3 במחלקה). \nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך.",
+    2: "טיל כתף חד פעמי נגד מבנים רכים ורקמים רכים/שריון קל. כלי ברמת הכיתה. ישנם 3 סוגי לאו- פטישון (A9), זרזיר (A4, A6, A7), לאו מוסב ״מבקיעים״.\nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך.",
+    3: "טיל כתף חד פעמי בעל רש״ק טאנדם. נגד מבנים עם שני מצבים (M/B).קיימים 5 סוגי משגרים: מטאדור ״חי״, מטאדור ״קל משקל״, משגר תת״ק, מטאדור 300 Black ומדמה משקל.\nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך.",
+    4: "יתד הינו רקטת כתף חד פעמית נגד בונקרים, מבנים ורכבים. היתד הינו רקטה יחסית חדשה בצה״ל ומוטמעת בכלל היחידות. \n החולית הינו מטול חד פעמי נ״ט/נב״ר כנגד טנקים, רק״מ, רכבים, עמדות ומבנים. המטול ממשפחת מפצח ומפצח קל והפעלתו זהה, השוני היחידי הינו לוח השנתות בכוונת האופטית.\nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך.",
+    5:"הינו נשק ברמת הכיתה (3 במחלקה).הוא יורה רימונים בקוטר 40 מ״מ, ומגיע בתצורה עצמאית- אינו רתום לנשק. המטול משמש כנ״א, אלפ״ה ונגד רק״ם רך.\nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך.",
+    6:"מקל״ר MOD 3 פותח ב-1967 ע״י חברה אזרחית אמריקאית, והחל להיעשות בו שימוש ארצי במלחמת המפרץ ב-1991.\nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך.",
+    7:"מקל״ר MK-47 מודל 0 הוא מקלע רימונים קל משקל. בשנת 2005 הובא לניסוי בישראל, וב-2012 הוטמע בחיל הרגלים.ייעודו- פגיעה במטרות אדם ורק״ם רך (זהה לייעודו של המקל״ר הרגיל).מקל״ר רעם מאושר לשימוש בהצבה קרקעית בלבד.\nשים לב! במידה ותרצה לתאם הסמכה מחוץ לביסלח (ביחידתך), כלל תיאומי האמלח, והלוגיסטיקה יקרו על בסיס יחידתך."
+};
+// מערך תמונות כותרת
+const titles = {
+    1: "assets/titles/matoT.png",
+    2: "assets/titles/laoT.png",
+    3: "assets/titles/mtAdorT.png",
+    4: "assets/titles/yatedholitT.png",
+    5: "assets/titles/matol2T.png",
+    6: "assets/titles/maklarT.png",
+    7: "assets/titles/maklaronT.png"
+};
+
+function openPopup(buttonNumber) {
+    currentButton = buttonNumber;
+
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("popup").style.display = "block";
+
+    // החלפת תמונה
+    document.getElementById("popupTitle").src = titles[buttonNumber];
+
+    // החלפת טקסט
+    document.getElementById("popupText").innerText = texts[buttonNumber];
+}
+
+function closePopup() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+}
+
+// מעבר ל־form
+function goToForm() {
+    window.location.href = "form" + currentButton + ".html";
+}
+</script> 
+<style>
+  body {
+    background-image: url("assets/background/b2.png");
+
+  }
+</style>
+</html>
