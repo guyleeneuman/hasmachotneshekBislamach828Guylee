@@ -607,24 +607,26 @@ body {
     width: 100%;
     display: flex;
     gap: 12px;
-    align-items: stretch;
 }
 
-.dateWrapper {
-    flex: 1;
+/* wrappers */
+.datePickerContainer,
+.timeWrapper {
     position: relative;
+    flex: 1;
 }
 
+/* inputs */
 .pillForm input[type="date"],
-.pillForm input[type="time"],
-.fakeDate {
+.pillForm input[type="time"] {
     width: 100%;
+    height: 55px;
+
     box-sizing: border-box;
 
-    height: 55px;
     padding: 0 16px;
-
     border-radius: 50px;
+
     border: none;
     outline: none;
 
@@ -632,42 +634,79 @@ body {
     color: #FFFCE9;
 
     text-align: center;
-    font-size: 1rem;
+    font-size: 16px;
     font-family: "secular";
 
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+    -webkit-appearance: none;
+    appearance: none;
 }
 
-/* אייקון לבן */
+/* calendar icon */
 .pillForm input[type="date"]::-webkit-calendar-picker-indicator,
 .pillForm input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
 }
 
-#dateRangeDisplay {
+/* PLACEHOLDER תאריך */
+.datePickerContainer::before {
+    content: "תאריך";
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
+    inset: 0;
 
-    color: #FFFCE9;
-    font-size: 0.85rem;
-    font-family: "secular";
-
-    white-space: nowrap;
-}
-
-.fakeDate {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    white-space: pre-line;
-    cursor: pointer;
+    color: rgba(255,252,233,0.7);
+    font-size: 16px;
+
+    pointer-events: none;
+    z-index: 1;
 }
 
+/* PLACEHOLDER שעה */
+.timeWrapper::before {
+    content: "שעה";
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(255,252,233,0.7);
+    font-size: 16px;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* טווח תאריכים */
+#dateRangeDisplay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    color: #FFFCE9;
+    font-size: 14px;
+
+    z-index: 2;
+}
+
+/* מעל placeholder */
+.datePickerContainer.hasValue::before {
+    display: none;
+}
+
+/* mobile */
 @media (max-width: 600px) {
 
     .dateTimeRow {
@@ -675,57 +714,14 @@ body {
     }
 
     .pillForm input[type="date"],
-    .pillForm input[type="time"],
-    .fakeDate {
+    .pillForm input[type="time"] {
         height: 50px;
-        font-size: 0.9rem;
+        font-size: 16px;
         padding: 0 10px;
     }
 
-    #dateRangeDisplay {
-        font-size: 0.7rem;
+    .datePickerContainer::before,
+    .timeWrapper::before {
+        font-size: 14px;
     }
 }
-/* 
-.datePickerContainer {
-    position: relative;
-    flex: 1;
-}
-
-.datePickerContainer::before {
-    content: "תאריך";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    color: rgba(255,252,233,0.7);
-    font-family: "secular";
-    pointer-events: none;
-    z-index: 2;
-}
-
-.datePickerContainer.hasValue::before {
-    display: none;
-}
-
-input[type="time"] {
-    position: relative;
-}
-
-.timeWrapper {
-    position: relative;
-    flex: 1;
-}
-
-.timeWrapper::before {
-    content: "שעה";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    color: rgba(255,252,233,0.7);
-    pointer-events: none;
-    font-family: "secular";
-} */
