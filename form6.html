@@ -79,13 +79,23 @@
   
 <textarea class="detailsField" name="details" placeholder="פירוט:
 גדוד/סיירת/אחר"></textarea>   <!-- כפתור שליחה -->
-<div class="dateTimeRow">
     <div class="datePickerContainer">
-      <div class="fakeDate" id="dateDisplayText"></div>
-      <input type="date" id="dateDisplay" required>
-      <input type="hidden" name="date_range" id="dateInput">
-    </div> <input type="time" name="time" required>
+<div class="dateTimeRow">
+
+  <!-- DATE -->
+  <div class="datePickerContainer">
+    <div class="fakeDate" id="dateDisplayText">תאריך</div>
+    <input type="date" id="dateDisplay" required>
+    <input type="hidden" name="date_range" id="dateInput">
   </div>
+
+  <!-- TIME -->
+  <div class="timeWrapper">
+    <div class="fakeTime"></div>
+    <input type="time" name="time" required>
+  </div>
+
+</div>
 <button type="submit" class="submitBtn">
   <img src="assets/butttons/submit.png" alt="הגשה">
 </button>
@@ -232,6 +242,38 @@ const data = {
           list.style.display = "none";
       }
   });
+
+  const timeInput = document.querySelector('input[type="time"]');
+const timeWrapper = document.querySelector('.timeWrapper');
+
+timeInput.addEventListener("input", () => {
+    if (timeInput.value) {
+        timeWrapper.classList.add("hasValue");
+    } else {
+        timeWrapper.classList.remove("hasValue");
+    }
+});
+
+const dateWrapper = document.querySelector(".datePickerContainer");
+
+dateDisplay.addEventListener("change", () => {
+    if (dateDisplay.value) {
+        dateWrapper.classList.add("hasValue");
+    }
+});
+
+dateDisplay.addEventListener("change", () => {
+    document.querySelector(".datePickerContainer")
+        .classList.add("hasValue");
+});
+
+document.querySelector('input[type="time"]').addEventListener("input", (e) => {
+    if (e.target.value) {
+        document.querySelector(".timeWrapper").classList.add("hasValue");
+    } else {
+        document.querySelector(".timeWrapper").classList.remove("hasValue");
+    }
+});
 
 
 </script>
