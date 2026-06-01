@@ -564,15 +564,10 @@ body {
 /* רקע מוחשך */
 #overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0,0,0,0.6);
-
+    inset: 0; /* במקום top/left/width/height */
+    background: rgba(0, 0, 0, 0.7);
     display: none;
-    z-index: 9998;
+    z-index: 6666;
 }
 
 /* הפופאפ */
@@ -580,11 +575,11 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%);
 
     display: none;
 
-    z-index: 9999;
+    z-index: 9999999999999999998;
 
     animation: popIn 0.3s ease forwards;
 }
@@ -641,7 +636,6 @@ body {
     padding: 0 16px;
 
     background: #c6350077;
-    color: transparent; /* מסתיר טקסט דיפולטי עד בחירה */
 
     text-align: center;
     font-size: 16px;
@@ -653,26 +647,29 @@ body {
     appearance: none;
 }
 
-/* show value only when selected */
-.pillForm input[type="date"]:focus,
-.pillForm input[type="time"]:focus,
-.pillForm input[type="date"]:valid,
-.pillForm input[type="time"]:valid {
+/* צבע השעה */
+.pillForm input[type="time"] {
     color: #FFFCE9;
 }
 
-/* calendar / clock icon */
+/* מסתיר את התאריך המקורי */
+#dateDisplay {
+    color: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+/* אייקונים */
 .pillForm input[type="date"]::-webkit-calendar-picker-indicator,
 .pillForm input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
 
 /* ======================
-   PLACEHOLDERS
+   DATE TEXT
 ====================== */
 
-.datePickerContainer::before,
-.timeWrapper::before {
+#dateDisplayText {
     position: absolute;
     inset: 0;
 
@@ -680,40 +677,24 @@ body {
     align-items: center;
     justify-content: center;
 
-    color: rgba(255,252,233,0.7);
-    font-size: 16px;
+    text-align: center;
 
     pointer-events: none;
 
-    transition: 0.2s;
-}
+    color: #FFFCE9;
+    font-size: 14px;
 
-/* .datePickerContainer::before {
-    content: "תאריך";
-} */
-
-.timeWrapper::before {
-    content: "שעה";
-}
-
-/* hide placeholder when value exists */
-.datePickerContainer.hasValue::before,
-.timeWrapper.hasValue::before {
-    opacity: 0;
+    z-index: 3;
 }
 
 /* ======================
-   DATE RANGE TEXT
+   TIME TEXT
 ====================== */
-.datePickerContainer {
-    position: relative;
-}
 
-/* שכבת הטקסט שלך */
-#dateDisplayText {
+.fakeTime {
     position: absolute;
     inset: 0;
-     text-align: center;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -726,13 +707,6 @@ body {
     z-index: 3;
 }
 
-/* האינפוט מעל */
-#dateDisplay {
-    position: relative;
-    z-index: 2;
-
-    color: transparent; /* עד בחירה */
-}
 /* ======================
    MOBILE
 ====================== */
@@ -748,5 +722,10 @@ body {
         height: 50px;
         font-size: 16px;
         padding: 0 10px;
+    }
+
+    #dateDisplayText,
+    .fakeTime {
+        font-size: 13px;
     }
 }

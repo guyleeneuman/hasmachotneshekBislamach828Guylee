@@ -89,11 +89,11 @@
     <input type="hidden" name="date_range" id="dateInput">
   </div>
 
-  <!-- TIME -->
-  <div class="timeWrapper">
-    <div class="fakeTime"></div>
-    <input type="time" name="time" required>
-  </div>
+   <!-- TIME -->
+ <div class="timeWrapper">
+    <div class="fakeTime" id="timeDisplayText">שעה</div>
+    <input type="time" name="time" id="timeDisplay" required>
+</div>
 
 </div>
 <button type="submit" class="submitBtn">
@@ -199,14 +199,14 @@ const data = {
   });
 
   function showPopup() {
-      const overlay = document.getElementById("overlay");
+      // const overlay = document.getElementById("overlay");
       const popup = document.getElementById("successPopup");
-      overlay.style.display = "block";
+      // overlay.style.display = "block";
       popup.style.display = "block";
       setTimeout(() => {
-          overlay.style.display = "none";
+          // overlay.style.display = "none";
           popup.style.display = "none";
-      }, 3000);
+      }, 5000);
   }
 
   /* =========================
@@ -243,39 +243,16 @@ const data = {
       }
   });
 
-  const timeInput = document.querySelector('input[type="time"]');
-const timeWrapper = document.querySelector('.timeWrapper');
+const timeInput = document.querySelector('input[type="time"]');
+const fakeTime = document.querySelector('.fakeTime');
 
-timeInput.addEventListener("input", () => {
+timeInput.addEventListener('input', () => {
     if (timeInput.value) {
-        timeWrapper.classList.add("hasValue");
+        fakeTime.style.display = 'none';
     } else {
-        timeWrapper.classList.remove("hasValue");
+        fakeTime.style.display = 'flex';
     }
 });
-
-const dateWrapper = document.querySelector(".datePickerContainer");
-
-dateDisplay.addEventListener("change", () => {
-    if (dateDisplay.value) {
-        dateWrapper.classList.add("hasValue");
-    }
-});
-
-dateDisplay.addEventListener("change", () => {
-    document.querySelector(".datePickerContainer")
-        .classList.add("hasValue");
-});
-
-document.querySelector('input[type="time"]').addEventListener("input", (e) => {
-    if (e.target.value) {
-        document.querySelector(".timeWrapper").classList.add("hasValue");
-    } else {
-        document.querySelector(".timeWrapper").classList.remove("hasValue");
-    }
-});
-
-
 </script>
 <style>
     body {

@@ -91,10 +91,10 @@
   </div>
 
   <!-- TIME -->
-  <div class="timeWrapper">
-    <div class="fakeTime"></div>
-    <input type="time" name="time" required>
-  </div>
+ <div class="timeWrapper">
+    <div class="fakeTime" id="timeDisplayText">שעה</div>
+    <input type="time" name="time" id="timeDisplay" required>
+</div>
 
 </div>   
 <button type="submit" class="submitBtn">
@@ -198,16 +198,15 @@ const data = {
           alert("שגיאה בשליחה: " + JSON.stringify(err));
       });
   });
-
-  function showPopup() {
-      const overlay = document.getElementById("overlay");
+ function showPopup() {
+      // const overlay = document.getElementById("overlay");
       const popup = document.getElementById("successPopup");
-      overlay.style.display = "block";
+      // overlay.style.display = "block";
       popup.style.display = "block";
       setTimeout(() => {
-          overlay.style.display = "none";
+          // overlay.style.display = "none";
           popup.style.display = "none";
-      }, 3000);
+      }, 5000);
   }
 
   /* =========================
@@ -243,6 +242,17 @@ const data = {
           list.style.display = "none";
       }
   });
+
+const timeInput = document.querySelector('input[type="time"]');
+const fakeTime = document.querySelector('.fakeTime');
+
+timeInput.addEventListener('input', () => {
+    if (timeInput.value) {
+        fakeTime.style.display = 'none';
+    } else {
+        fakeTime.style.display = 'flex';
+    }
+});
 </script>
 <style>
     body {
