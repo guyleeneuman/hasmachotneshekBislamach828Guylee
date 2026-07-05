@@ -55,7 +55,7 @@ body {
     transform: translateX(-50%);
     width: 75vw;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     z-index: 10000000000000000;
     direction: rtl;
 
@@ -366,6 +366,7 @@ body {
     height: 110px;
     border-radius: 20px;
     resize: none;
+    font-size: 1rem;
     font-family: "secular";
     direction: rtl;
 }
@@ -375,6 +376,7 @@ body {
 .pillForm textarea::placeholder {
     color: #FFFCE9;
     opacity: 0.8;
+    width: 30vw;
 }
 
 /* כפתור שליחה
@@ -520,7 +522,7 @@ body {
     padding: 0;
     cursor: pointer;
     position: relative;
-    left: 25%;
+    left: 50;
     width: fit-content;
     bottom: -2vh;
 }
@@ -555,7 +557,7 @@ body {
     color: #FFFCE9;
 
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-family: "secular";
 
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -728,4 +730,17 @@ body {
     .fakeTime {
         font-size: 13px;
     }
+}
+
+.dateTimeRow {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.datePickerContainer,
+.timeWrapper {
+    flex: 1;
+    min-width: 0;
 }

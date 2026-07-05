@@ -19,8 +19,74 @@
 
   <input type="number" name="solider_number" placeholder="מס' חיילים">
 
-  <input type="text" name="place" placeholder="מיקום האימון">
+<div class="dropdown placeDropdown">
 
+  <div class="dropdownSelected" id="selectedPlace">
+    בחר מיקום אימון
+  </div>
+
+  <div class="dropdownList" id="placeList">
+
+    <div class="dropdownItem noImg" data-value="ביסלח">
+      ביסל"ח
+    </div>
+
+    <div class="dropdownItem noImg" data-value="אחר">
+      אחר
+    </div>
+
+  </div>
+
+  <input type="hidden" name="place" id="placeInput">
+
+</div>
+<div class="dropdown typeDropdown">
+
+    <div class="dropdownSelected" id="selectedTrainingType">
+        בחר סוג הסמכה
+    </div>
+
+    <div class="dropdownList" id="trainingTypeList">
+
+        <div class="dropdownItem noImg" data-value="הסמכה">
+            הסמכה
+        </div>
+
+        <div class="dropdownItem noImg" data-value="רענון">
+            רענון
+        </div>
+
+    </div>
+
+    <input type="hidden" name="training_type" id="trainingTypeInput">
+
+</div>
+</div>
+
+<!-- <div class="dropdown weaponDropdown">
+
+  <div class="dropdownSelected" id="selectedWeapon">
+     בחר 
+  </div>
+
+  <div class="dropdownList" id="weaponList">
+
+    <div class="dropdownItem" data-value="יתד">
+      יתד
+    </div>
+
+    <div class="dropdownItem" data-value="חולית">
+     חולית
+    </div>
+<div class="dropdownItem" data-value="שניהם">
+     שניהם
+    </div>
+
+  </div>
+
+  <input type="hidden" name="personal_weapon" id="weaponInput">
+
+</div> -->
   <!-- כותרת -->
 <div class="dropdown">
   <div class="dropdownSelected" id="selectedUnit">
@@ -60,6 +126,7 @@
   <input type="hidden" name="unit" id="unitInput">
 </div>
 
+
   <!-- <div class="imageAndDetails">
 
     <div class="imageSelector">
@@ -73,29 +140,37 @@
     </div> -->
 
   <!-- </div> -->
-
+.
   <!-- הערות -->
-  <textarea name="notes" placeholder="הערות:"></textarea>
+  <textarea name="notes" placeholder="הערות מיקום:"></textarea>
   
 <textarea class="detailsField" name="details" placeholder="פירוט:
 גדוד/סיירת/אחר"></textarea>   <!-- כפתור שליחה -->
-    <div class="datePickerContainer">
+
+
+
+
+
+
+
+<!-- תאריך + שעה -->
 <div class="dateTimeRow">
 
-  <!-- DATE -->
-  <div class="datePickerContainer">
-    <div class="fakeDate" id="dateDisplayText">תאריך</div>
-    <input type="date" id="dateDisplay" required>
-    <input type="hidden" name="date_range" id="dateInput">
-  </div>
+    <!-- DATE -->
+    <div class="datePickerContainer">
+        <div class="fakeDate" id="dateDisplayText">תאריך</div>
+        <input type="date" id="dateDisplay" required>
+        <input type="hidden" name="date_range" id="dateInput">
+    </div>
 
-   <!-- TIME -->
- <div class="timeWrapper">
-    <div class="fakeTime" id="timeDisplayText">שעה</div>
-    <input type="time" name="time" id="timeDisplay" required>
+    <!-- TIME -->
+    <div class="timeWrapper">
+        <div class="fakeTime" id="timeDisplayText">שעה</div>
+        <input type="time" name="time" id="timeDisplay" required>
+    </div>
+
 </div>
 
-</div>
 <button type="submit" class="submitBtn">
   <img src="assets/butttons/submit.png" alt="הגשה">
 </button>
@@ -128,7 +203,7 @@ function goToMenu() {
 
       const start = new Date(dateDisplay.value);
       const end = new Date(start);
-      end.setDate(end.getDate() + 1); // הוספת יום ליצירת טווח של יומיים
+      end.setDate(end.getDate() + 2); // הוספת יום ליצירת טווח של יומיים
 
       const format = (d) =>
           `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
@@ -161,20 +236,27 @@ function goToMenu() {
       const notes = this.notes.value.trim();
       const date_range = document.getElementById("dateInput").value;
       const time = this.time.value;
+      // const personal_weapon = document.getElementById("weaponInput").value.trim();
+      const training_type =
+    document.getElementById("trainingTypeInput").value.trim();
+    if (!name || !phone || !job || !solider || !place ||
+    !unit || !training_type || !details ||
+    !date_range || !time) {
 
-      if (!name || !phone || !job || !solider || !place || !unit || !details || !date_range || !time) {
-          alert("יש למלא את כל השדות ולבחור תאריך לפני שליחה");
-          return;
-      }
+    alert("יש למלא את כל השדות ולבחור תאריך לפני שליחה");
+    return;
+}
 const data = {
           user_name: name,
           phone_number: phone,
           job: job,
           solider_number: solider,
-          place: place,
+          training_place: place,
           unit: unit,
           details: details,
           notes: notes,
+          // personal_weapon: personal_weapon,
+          training_type: training_type,
           date_range: date_range, // נשלח כטווח תאריכים מוגדר (למשל: 31/05/2026 - 01/06/2026)
           time: time,
           title: "מקלר"
@@ -198,7 +280,7 @@ const data = {
       });
   });
 
-  function showPopup() {
+ function showPopup() {
       // const overlay = document.getElementById("overlay");
       const popup = document.getElementById("successPopup");
       // overlay.style.display = "block";
@@ -222,20 +304,28 @@ const data = {
       list.style.display = list.style.display === "block" ? "none" : "block";
   });
 
-  document.querySelectorAll(".dropdownItem").forEach(item => {
-      item.addEventListener("click", () => {
-          const value = item.getAttribute("data-value");
-          const img = item.querySelector("img");
-          hiddenInput.value = value;
+ list.querySelectorAll(".dropdownItem").forEach(item => {
+    item.addEventListener("click", () => {
 
-          if (img) {
-              selected.innerHTML = `<img src="${img.src}" style="width:25px;height:25px;border-radius:6px;vertical-align:middle;margin-left:6px;"> ${value}`;
-          } else {
-              selected.innerHTML = value;
-          }
-          list.style.display = "none";
-      });
-  });
+        const value = item.getAttribute("data-value");
+        const img = item.querySelector("img");
+
+        hiddenInput.value = value;
+
+        if (img) {
+            selected.innerHTML = `
+                <img src="${img.src}"
+                     style="width:25px;height:25px;border-radius:6px;
+                     vertical-align:middle;margin-left:6px;">
+                ${value}
+            `;
+        } else {
+            selected.innerHTML = value;
+        }
+
+        list.style.display = "none";
+    });
+});
 
   document.addEventListener("click", (e) => {
       if (!dropdown.contains(e.target)) {
@@ -253,6 +343,127 @@ timeInput.addEventListener('input', () => {
         fakeTime.style.display = 'flex';
     }
 });
+
+/* =========================
+     WEAPON DROPDOWN
+========================= */
+// const selectedWeapon = document.getElementById("selectedWeapon");
+// const weaponList = document.getElementById("weaponList");
+// const weaponInput = document.getElementById("weaponInput");
+// const weaponDropdown = document.querySelector(".weaponDropdown");
+
+// selectedWeapon.addEventListener("click", (e) => {
+//     e.stopPropagation();
+//     weaponList.style.display =
+//         weaponList.style.display === "block" ? "none" : "block";
+// });
+
+// weaponList.querySelectorAll(".dropdownItem").forEach(item => {
+//     item.addEventListener("click", () => {
+
+//         const value = item.getAttribute("data-value");
+
+//         weaponInput.value = value;
+//         selectedWeapon.innerText = value;
+
+//         weaponList.style.display = "none";
+//     });
+// });
+
+// document.addEventListener("click", (e) => {
+//     if (!weaponDropdown.contains(e.target)) {
+//         weaponList.style.display = "none";
+//     }
+// });
+const selectedTrainingType = document.getElementById("selectedTrainingType");
+const trainingTypeList = document.getElementById("trainingTypeList");
+const trainingTypeInput = document.getElementById("trainingTypeInput");
+const typeDropdown = document.querySelector(".typeDropdown");
+
+selectedTrainingType.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    trainingTypeList.style.display =
+        trainingTypeList.style.display === "block"
+            ? "none"
+            : "block";
+});
+
+trainingTypeList.querySelectorAll(".dropdownItem").forEach(item => {
+    item.addEventListener("click", () => {
+
+        const value = item.dataset.value;
+
+        trainingTypeInput.value = value;
+        selectedTrainingType.innerText = value;
+
+        trainingTypeList.style.display = "none";
+    });
+});
+
+document.addEventListener("click", (e) => {
+    if (!typeDropdown.contains(e.target)) {
+        trainingTypeList.style.display = "none";
+    }
+});
+
+// const placeInput = document.querySelector('input[name="place"]');
+
+// placeInput.addEventListener("blur", () => {
+//     if (placeInput.value.trim() !== "") {
+//         alert("שים לב! במידה וההסמכה ביחידתך (מחוץ לביסלח) לינת המדריכות, אמלח, חימוש, נהג רכב חיפוק וחובש, קצין מטוויח ושטח אש הינם על בסיס יחידתך. במידה וההסמכה בביסלח: נהג, חובש ותורן (מעל 10 חיילים) הינם על בסיס יחידתך");
+//     }
+// });
+dateDisplay.addEventListener("blur", () => {
+    if (dateDisplay.value.trim() !== "") {
+        alert("שים לב! בתאריכים שבחרת ימי ההסמכה הינם ימים מלאים (אין יציאה בסוף היום האחרון).");
+    }
+});
+
+const selectedPlace = document.getElementById("selectedPlace");
+const placeList = document.getElementById("placeList");
+const placeInput = document.getElementById("placeInput");
+const placeDropdown = document.querySelector(".placeDropdown");
+
+selectedPlace.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    placeList.style.display =
+        placeList.style.display === "block"
+            ? "none"
+            : "block";
+});
+
+placeList.querySelectorAll(".dropdownItem").forEach(item => {
+    item.addEventListener("click", () => {
+
+        const value = item.dataset.value;
+
+        placeInput.value = value;
+        selectedPlace.innerText = value;
+
+        placeList.style.display = "none";
+
+        // Alerts
+        if (value === "ביסלח") {
+            alert(
+                "שים לב, נהג, חובש ותורן (מעל 10 חיילים) הינם על בסיס יחידתך"
+            );
+        }
+
+        if (value === "אחר") {
+            alert(
+                "שים לב, לינת המדריכות, אמלח, חימוש, נהג רכב חיפוק וחובש, קצין מטוויח ושטח אש הינם על בסיס יחידתך."
+            );
+        }
+    });
+});
+
+document.addEventListener("click", (e) => {
+    if (!placeDropdown.contains(e.target)) {
+        placeList.style.display = "none";
+    }
+});
 </script>
 <style>
     body {
@@ -261,7 +472,7 @@ timeInput.addEventListener('input', () => {
     background-image: url("assets/background/b1.png");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat:repeat-y;
     direction: ltr;
     font-family: "secular";
 }
